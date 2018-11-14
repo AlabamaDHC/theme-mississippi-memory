@@ -1,0 +1,182 @@
+/*
+ * Theme Name: Mississippi Memory Theme
+ * Description:
+ * Author: Tyler Grace (ADHC)
+ * Version: 2.2.6
+*/
+
+h1, h2, h3, p, body {
+    color: #fff;
+}
+
+h1 {
+    font-size: 2em;
+    font-family: 'Passion One', cursive;
+    color: #fff;
+    margin:0;
+    letter-spacing: 1px;
+}
+
+footer {
+    color: #fff;
+    background-color: #0000002b; /* #c7c7c7 */
+    padding: 25px 0;
+    text-align: center;
+}
+
+footer a{
+    color: #fff !important;
+}
+
+hr {
+    border-top: 2px solid rgba(255, 255, 255);
+}
+
+body {
+    background-color: #3d3d3d;
+}
+
+.navbar-brand {
+    font-family: 'Passion One', cursive;
+    font-size: 2.25rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    letter-spacing: 1px;
+}
+
+.navbar-dark {
+    background-color: black;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: rgb(255, 255, 255);
+}
+
+.card {
+    background-color: #000;
+    border: 1px solid #ffffff;
+    margin: 0.75em 2em;
+
+}
+
+
+.card-body {
+    padding: 0.75rem;
+}
+
+.btn-outline-primary {
+    color: #fff;
+    border-color: #fff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #bb0d00;
+    border-color: #bb0d00;
+}
+
+.btn-outline-primary-hover {
+    background-color: #bb0d00;
+    border-color: #bb0d00;
+    padding: .2rem 0.75rem;
+    font-size: 1.5rem;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    background-color: #bb0e01;
+    border-color: #bb0e01;
+}
+
+.btn-primary:hover {
+    background-color: #960c02;
+    border-color: #960c02;
+}
+
+
+blockquote {
+    border-left: 5px solid #eee;
+    /* border-left: 5px solid #a70000;  */
+    padding-left: 5px;
+    margin-left: 2rem;
+    margin-right: 4rem;
+    /* color: #a70000;
+    background-color: white; */
+}
+
+.figure-caption {
+    font-size: 90%;
+    color: #b1bac2;
+}
+
+
+
+/* Source Badges */
+.badge {
+    font-size: 85%;
+    line-height: 1.2;
+}
+
+.source-links {
+    color: #fff;
+}
+
+.source-links:hover{
+    text-decoration: none;
+}
+
+.source-links .list-group-item {
+    background-color: initial;
+    margin-bottom: -1px !important;
+}
+
+.source-links .list-group-item:hover {
+    background-color: #fffdf9;
+    color: black;
+}
+
+.source-links i {
+    margin-top: 3px;
+}
+
+
+.badge-source-article {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge-source-letter {
+    color: #fff;
+    background-color: #17a2b8;
+}
+
+.badge-source-photo {
+    color: #fff;
+    background-color: #FF9800;
+}
+
+.badge-source-census {
+    color: #fff;
+    background-color: #673AB7;
+}
+
+.badge-source-other {
+    color: #fff;
+    background-color: #3F51B5;
+}
+
+
+.menu-link {
+    color: #fff;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+
+.menu-link:hover {
+    color: #fff;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}

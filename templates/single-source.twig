@@ -1,0 +1,368 @@
+{% include 'html-header.twig' %}
+
+	<style>
+	header {
+		position:fixed;
+		height: auto;
+		display: block;
+		width: 100%;
+		background: red;
+		z-index:9;
+		text-align:center;
+		color: #f2f2f2;
+		padding: 0 0 0 0;
+		top: 0px;
+	}
+
+	#title-row{
+		margin-top: 5rem;
+	}
+
+	#back-to-county-btn {
+		color: #fff;
+	}
+
+	.alert {
+		max-width: 72%;
+		margin: auto;
+		margin-top: 5rem;
+		margin-bottom: -3rem;
+	}
+
+	#container1 {
+		    min-height: 60vh;
+	}
+
+	#metadata-list {
+
+	}
+
+	#metadata-list .list-group-item {
+		    background: initial;
+	}
+
+	#metadata-list-header {
+
+	}
+
+	#source-img {
+		border: 1px solid #fff;
+	}
+
+	#source-doc {
+		width: 100%;
+		height: 100%;
+		min-height: 100vh;
+	}
+
+
+	</style>
+
+
+</head>
+
+<body>
+
+
+	<header>
+		{% include "menu.twig" with {'menu': menu.get_items} %}
+	</header>
+
+	<div class="container-fluid">
+
+		<div id="title-row" class="row text-right align-bottom">
+			<div class="col-sm text-left">
+				<a id="back-to-county-btn" class="btn btn-outline btn-lg" href="{{ function('get_permalink', post.event) }}"><i class="fas fa-chevron-left"></i> Back to Research Summary</a>
+			</div>
+
+			<div class="col-sm text-center">
+				<h1 id="lynching-title" class="align-top">{{post.title}} </h1>
+			</div>
+
+			<div class="col-sm text-right">
+				<h1 id="county-title" class="align-top" ><span class="btn btn-outline-primary-hover btn-lg">Source</span></h1>
+			</div>
+		</div>
+
+		<div class="container">
+			{% if post.get_field('source_file').mime_type in ['image/jpeg', 'image/jpg', 'image/png']%}
+				<img id="source-img" class="rounded img-fluid mx-auto d-block mt-4" src="{{ post.get_field('source_file').url }}">
+
+			{% elseif post.get_field('source_file').mime_type in ['application/pdf']%}
+				<object id="source-doc" class="mx-auto d-block mt-4" data="{{ post.get_field('source_file').url }}" type="application/pdf">
+	   				<p><b>Example fallback content</b>: This browser does not support PDFs. Please download the PDF to view it: <a href="{{ post.get_field('source_file').url }}">Download PDF</a>.</p>
+				</object>
+		 	{% endif %}
+
+			{% if post.transcription %}
+				<h4 class="h5 mt-4">Transcription: </h4>
+				<blockquote class="blockquote">
+  					<p class="mb-0">{{ post.transcription }}</p>
+				</blockquote>
+			{% endif %}
+
+			<h3 id="metadata-list-header" class="mt-5">Metadata</h3>
+			<ul id="metadata-list" class="list-group">
+				{% if post.post_title %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Title:</h4>
+							</div>
+							<div class="col-10">
+								<h4 class="metadata-field-value h5">{{post.post_title}}</h4>
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.alternate_title %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Alternate Title:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.alternate_title is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.alternate_title[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.alternate_title}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.source_type %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Source Type:</h4>
+							</div>
+							<div class="col-10">
+								<h4 class="metadata-field-value h5">
+									{% if post.source_type is iterable %}
+										<span class="badge badge-secondary badge-source-{{ post.source_type[0]|sanitize }} mr-2">{{ post.source_type|capitalize }}</span>
+									{% else %}
+										<span class="badge badge-secondary badge-source-{{ post.source_type|sanitize }} mr-2">{{ post.source_type|capitalize }}</span>
+									{% endif %}
+								</h4>
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.get_field('source_file') %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Source File:</h4>
+							</div>
+							<div class="col-10">
+								<h4 class="metadata-field-value h5">
+									<a href="{{ post.get_field('source_file').url }}">Link</a>
+								</h4>
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.creator %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Creator:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.creator is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.creator[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.creator}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.contributor %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Contributor:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.contributor is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.contributor[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.contributor}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.creation_date %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Creation Date:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.creation_date is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.creation_date[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.creation_date}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.publisher %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Publisher:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.publisher is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.publisher[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.publisher}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.place_of_pub %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Place of Publication:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.place_of_pub is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.place_of_pub[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.place_of_pub}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.pub_date %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Publication Date:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.pub_date is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.pub_date[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.pub_date}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.description %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Description:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.description is iterable %}
+									<h4 class="metadata-field-value h5">{{post.description[0]}}</h4>
+								{% else %}
+									<h4 class="metadata-field-value h5">{{post.description}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{#
+				{% if post.transcription %}
+				    <li class="list-group-item">
+				        <div class="row">
+				            <div class="col-2">
+				                <h4 class="metadata-field-label h5">Transcription:</h4>
+				            </div>
+				            <div class="col-10">
+				                {% if post.transcription is iterable %}
+				                    <h4 class="metadata-field-value h5">{{post.transcription[0]}}</h4>
+				                {% else %}
+				                    <h4 class="metadata-field-value h5">{{post.transcription}}</h4>
+				                {% endif %}
+				            </div>
+				        </div>
+				    </li>
+				{% endif %}
+				#}
+
+				{% if post.text %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Text:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.text is iterable %}
+									<h4 class="metadata-field-value h5">{{post.text[0]}}</h4>
+								{% else %}
+									<h4 class="metadata-field-value h5">{{post.text}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+
+				{% if post.citation %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-2">
+								<h4 class="metadata-field-label h5">Citation:</h4>
+							</div>
+							<div class="col-10">
+								{% if post.citation is iterable %}
+								    <h4 class="metadata-field-value h5">{{post.citation[0]}}</h4>
+								{% else %}
+								    <h4 class="metadata-field-value h5">{{post.citation}}</h4>
+								{% endif %}
+							</div>
+						</div>
+					</li>
+				{% endif %}
+			</ul>
+
+			<br>
+			<br>
+		</div>
+
+	</div>
+
+	{% include 'footer.twig' %}
+
+	{{ function('wp_footer') }}
+
+	<script>
+	jQuery(document).ready(function($) {
+
+		if ($('#wpadminbar').length > 0) {
+			$("header").css('top', "32px");
+		}
+		console.log( $( "img.alignright" ) );
+
+		$( "img.alignright" ).addClass('rounded').addClass('float-right').removeClass('alignright').css('margin-left', '1rem').css('margin-top', '0.5rem');
+		$( "img.alignleft" ).addClass('rounded').addClass('float-left').removeClass('alignleft').css('margin-right', '1rem').css('margin-top', '0.5rem');
+	});
+	</script>
+
+
+</body>
+</html>

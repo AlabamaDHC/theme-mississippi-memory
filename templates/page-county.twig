@@ -1,0 +1,204 @@
+{% block html_head_container %}
+
+{% include 'html-header.twig' %}
+	{% block head %}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.1/fullpage.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="./examples.css" /> -->
+		<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css">
+	{% endblock %}
+	</head>
+{% endblock %}
+
+<style>
+	.intro p{
+		color: #fff;
+	}
+
+	.section{
+		text-align:center;
+	}
+
+
+	header {
+		position:fixed;
+		height: auto;
+		display: block;
+		width: 100%;
+		background: #333;
+		z-index:9;
+		text-align:center;
+		color: #f2f2f2;
+		padding: 0 0 0 0;
+		top: 0px;
+	}
+
+
+
+	/* #lynching-list-container {
+		width: 75%;
+		margin: 0 auto;
+	} */
+
+
+
+	svg {
+
+    	/* background: grey; */
+
+		/* background-image: url(maps/png/tuscaloosa.png);
+		background-size: 100% 100%;
+		background-repeat: no-repeat; */
+	}
+
+	.entry-header { display: none; }
+	.marker-link:hover > .marker-link g{ fill: blue }
+	.marker-link:hover > g .cls-1, .marker-link:hover > g .cls-2 { fill: black }
+	.marker-popups {display: none;}
+
+	#map-container {
+
+
+	}
+
+	/* #container1 {
+		margin-top: 5rem;
+	} */
+
+	/* #title-row {
+		margin-top: 3rem;
+	} */
+
+	#info-container  {
+		margin-top: 3vh;
+		margin-bottom: 3vh;
+		margin-right: 1vw;
+		margin-left: 1vw;
+	}
+
+	#victim-info  {
+		border: 1px solid white;
+		padding: 1rem;
+    	border-radius: 5px;
+	}
+
+	#victim-sum {
+		margin-top: 1rem;
+	}
+
+	#victim-desc, #victim-loc {
+		margin-bottom: 0px;
+		font-size: 1.35rem;
+	}
+
+	#county-title {
+		padding-top: 8px;
+	}
+
+	#county-title span {
+		/* margin-top: -3px; */
+		margin-top: 4px;
+    	margin-bottom: 6px;
+		cursor: initial;
+	}
+
+
+</style>
+
+
+<body>
+
+{% include "menu.twig" with {'menu': menu.get_items} %}
+
+<div class="container-fluid">
+
+	<div id="title-row" class="row text-center align-bottom">
+		<div class="col-12">
+		    <h1 id="county-title" class="align-top" >
+		        {{post.title}}
+		        <span class="btn btn-outline-primary-hover btn-lg">{{post.number_of_lynchings}} lynchings</span>
+		        <span class="btn btn-outline-primary-hover btn-lg">{{post.number_killed}} killed</span>
+		    </h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="map" class="col-12 col-lg-8">
+	    	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1864 1861">
+	        <defs>
+	            <style>
+	                .cls-1 {
+	                    fill: #bb0e01;
+	                }
+	                .cls-2 {
+	                    font-size: 40px;
+	                    fill: #bb0e01;
+						font-weight: 800;
+	                    /* font-family: Silom, Silom; */
+	                }
+	            </style>
+				<filter x="0" y="0" width="1" height="1" id="solid">
+      				<feFlood flood-color="rgba(255, 232, 203, 0.75)"/>
+      				<feComposite in="SourceGraphic"/>
+    			</filter>
+	        </defs>
+	        <title>{{post.title}} Map</title>
+	        <g id="Layer_1" data-name="Layer 1">
+				<image width="1864" height="1861" xlink:href="{{ post.get_field('map') }}">
+	        </g>
+	        <g id="Layer_2" data-name="Layer 2">
+				{% for item in post.get_field('markers') %}
+					{% if item.display %}
+					<a class="marker-link" id="marker-{{loop.index}}-link" xlink:href="#{{ function('get_the_title', item.link)|sanitize }}">
+						<g id="marker-{{loop.index}}">
+							<path filter="url(#solid)" class="cls-1" {{ d }} transform="translate({{item.marker_point_coordinates.x}} {{item.marker_point_coordinates.y}})" />
+							<text filter="url(#solid)" class="cls-2" transform="translate({{item.marker_text_coordinates.x}} {{item.marker_text_coordinates.y}})">{{item.marker_label}} </text>
+						</g>
+					</a>
+					{% endif %}
+				{% endfor %}
+	        </g>
+	    	</svg>
+		</div>
+
+		<div  class="col-12 col-lg-4">
+			<div id="info-container" class="row">
+				<div id="victim-info" class="col">
+					<h2 id="victim-name"><h2>
+				    <h3 id="victim-desc"></h3>
+				    <h3 id="victim-loc"></h3>
+				    <p id="victim-sum">Select a point to see more information</p>
+					<a id="victim-link" class="btn btn-outline-primary invisible" href="event/charles-mckelton-john-johnson-feb-11-1893-sylvan" role="button"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	{% for item in post.get_field('markers') %}
+		$('#marker-{{loop.index}}').on('click touch', function () {
+			console.log('event fired');
+			$( "#victim-name" ).text( "{{ item.name }}" );
+			$( "#victim-desc" ).text( "{{ item.description }}" );
+			$( "#victim-loc" ).text( "{{ item.location }}" );
+			$( "#victim-sum" ).text( '{{ item.summary }}' );
+			$( "#victim-link" ).removeClass('invisible').text( "Research Summary" ).attr("href", "{{ function('get_permalink', item.link) }}");
+		});
+    {% endfor %}
+
+});
+</script>
+
+{% include 'footer.twig' %}
+{{ function('wp_footer') }}
+
+</body>
+</html>

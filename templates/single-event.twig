@@ -1,0 +1,122 @@
+{% include 'html-header.twig' %}
+
+	<style>
+	header {
+		position:fixed;
+		height: auto;
+		display: block;
+		width: 100%;
+		background: red;
+		z-index:9;
+		text-align:center;
+		color: #f2f2f2;
+		padding: 0 0 0 0;
+		top: 0px;
+	}
+
+	#title-row{
+		margin-top: 5rem;
+	}
+
+	#back-to-county-btn {
+		color: #fff;
+	}
+
+	.btn-outline-primary-hover{
+		margin-top: 0px;
+		line-height: 1.2;
+	}
+
+	#title-row span {
+		cursor: initial;
+	}
+
+	</style>
+</head>
+
+<body>
+	<header>
+		{% include "menu.twig" with {'menu': menu.get_items} %}
+	</header>
+
+	<div id="container1" class="container-fluid">
+
+		<div id="title-row" class="row text-right align-bottom">
+			<div class="col-sm text-left">
+				<a id="back-to-county-btn" class="btn btn-outline btn-lg" href="{{ function('get_permalink', post.county) }}"><i class="fas fa-chevron-left"></i> Back to County Map</a>
+			</div>
+
+			<div class="col-sm text-center">
+				<h1 id="lynching-title" class="align-top" >
+					Lynching of {{post.lynching_victims}}
+				</h1>
+			</div>
+
+			<div class="col-sm text-right align-bottom">
+				<h1 id="county-title" class="align-top" ><span class="btn btn-outline-primary-hover btn-lg">{{ function('get_the_title', post.county) }}</span></h1>
+			</div>
+		</div>
+
+		<div id="content" class="container mt-3 mb-5">
+			{{ post.post_content|wpautop|shortcodes|bootstrap }}
+		</div>
+
+		<div id="reflections" class="container mt-3 mb-5">
+			<h3 class="h5">Reflections</h3>
+			<p>The above article was written by University of Alabama students. Click below to read their reflections on this project.</p>
+			<div class="row">
+			{% for item in post.get_field('reflections') %}
+				<div class="col-2 text-center">
+					{% if item.get_field('picture') %}
+						<a href="{{ TimberPost(item).link }}">
+							<img src="{{item.get_field('picture').url|resize(70, 75)}}" alt="Reflection Author photo - {{ TimberPost(item).title }}" class="rounded">
+							<p>{{ TimberPost(item).title }}</p>
+						</a>
+					{% else %}
+						<a href="{{ TimberPost(item).link }}" style="text-decoration-color: #fff;">
+							<img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1656772b560%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1656772b560%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242.15%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Reflection Author photo placeholder" class="rounded">
+							<p class="mb-0">{{ TimberPost(item).title }}</p>
+						</a>
+					{% endif %}
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+
+		<div id="sources" class="container mt-3 mb-5">
+			<h3>Sources</h3>
+			<ul id="sources-list" class="list-group">
+				{% for item in sources %}
+					<a href="{{ function('get_permalink', item.ID) }}" class="source-links">
+						<li class="list-group-item">
+							<span class="badge badge-secondary badge-source-{{ item.source_type|sanitize }} mr-2">{{ item.source_type|capitalize }}</span>
+							{{ item.post_title }}
+							<i class="fas fa-chevron-right float-right"></i>
+						</li>
+					</a>
+				{% endfor %}
+			</ul>
+		</div>
+
+	</div>
+
+
+	{% include 'footer.twig' %}
+	{{ function('wp_footer') }}
+
+	<script>
+	jQuery(document).ready(function($) {
+
+		if ($('#wpadminbar').length > 0) {
+			$("header").css('top', "32px");
+		}
+		console.log( $( "img.alignright" ) );
+
+		// $( "img.alignright" ).addClass('rounded').addClass('float-right').removeClass('alignright').css('margin-left', '1rem').css('margin-top', '0.5rem');
+		// $( "img.alignleft" ).addClass('rounded').addClass('float-left').removeClass('alignleft').css('margin-right', '1rem').css('margin-top', '0.5rem');
+	});
+	</script>
+
+
+</body>
+</html>

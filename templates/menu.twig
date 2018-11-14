@@ -1,0 +1,23 @@
+{% if menu %}
+<nav class="navbar navbar-expand-lg navbar-dark">
+		<a class="navbar-brand" href="{{site.link}}">ALABAMA MEMORY</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+		<div class="collapse navbar-collapse" id="navbarToggler">
+
+			<ul class="navbar-nav ml-auto p-2">
+			{% for item in menu %}
+				<li class="{{ item.classes | join(' ') }}">
+					<a class="menu-link" target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
+				</li>
+				<!-- <li class="nav-item active">
+	    			<a class="nav-link" href="https://adhc.lib.ua.edu/alabama-memory-redesign/">Home <span class="sr-only">(current)</span></a>
+	  			</li>
+	  			<li class="nav-item">
+	    			<a class="nav-link" href="https://adhc.lib.ua.edu/alabama-memory-redesign/state.html">State Map</a>
+	  			</li> -->
+			{% endfor %}
+			</ul>
+		</div>
+</nav>
+{% endif %}

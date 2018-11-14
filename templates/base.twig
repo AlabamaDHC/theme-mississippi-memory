@@ -1,0 +1,78 @@
+{% block html_head_container %}
+
+{% include 'html-header.twig' %}
+	{% block head %}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.1/fullpage.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="./examples.css" /> -->
+		<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css">
+	{% endblock %}
+	</head>
+{% endblock %}
+
+<style>
+	.entry-header { display: none; }
+	.marker-link:hover > .marker-link g{ fill: blue }
+	.marker-link:hover > g .cls-1, .marker-link:hover > g .cls-2 { fill: black }
+	.marker-popups {display: none;}
+
+	#info-container  {
+		margin-top: 3vh;
+		margin-bottom: 3vh;
+		margin-right: 1vw;
+		margin-left: 1vw;
+	}
+
+	#victim-info  {
+		border: 1px solid white;
+		padding: 1rem;
+    	border-radius: 5px;
+	}
+
+	#victim-sum {
+		margin-top: 1rem;
+	}
+
+	#victim-desc, #victim-loc {
+		margin-bottom: 0px;
+		font-size: 1.35rem;
+	}
+
+	#county-title {
+		padding-top: 8px;
+	}
+
+	#county-title span {
+		/* margin-top: -3px; */
+		margin-top: 4px;
+    	margin-bottom: 6px;
+	}
+</style>
+
+
+	<header>
+		{% block header %}
+			{% include "menu.twig" with {'menu': menu.get_items} %}
+			<div id="title-row" class="row text-center align-bottom">
+				<div class="col-12">
+					<h1 id="county-title" class="align-top" >{% if title %}<h1>{{title}}</h1>{% endif %}</h1>
+				</div>
+			</div>
+		{% endblock %}
+	</header>
+
+	<body>
+		<section id="content" role="main" class="container-fluid">
+			{% block content %}
+				Sorry, no content
+			{% endblock %}
+		</section>
+
+		{% block footer %}
+			{% include 'footer.twig' %}
+			{{ function('wp_footer') }}
+		{% endblock %}
+
+	</body>
+</html>
