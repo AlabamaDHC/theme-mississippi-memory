@@ -353,7 +353,7 @@ acf_add_local_field_group(array(
 					'label' => 'Map SVG',
 					'name' => 'map_svg',
 					'type' => 'textarea',
-					'instructions' => 'Copy the only "<a>" elements from the svg file and past them in this box',
+					'instructions' => 'Copy the only "&lt;a>" elements from the svg file and past them in this box.',
 					'required' => 0,
 					'conditional_logic' => 0,
 					'wrapper' => array(
